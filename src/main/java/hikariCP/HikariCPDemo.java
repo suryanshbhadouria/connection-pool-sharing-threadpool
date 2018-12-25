@@ -37,17 +37,6 @@ public class HikariCPDemo {
         }
         executorService.shutdown();
         executorService.awaitTermination(1, TimeUnit.DAYS);
-
-
-        TimerTask repeatedTask = new TimerTask() {
-            public void run() {
-                DataSource.emitMetrics();
-            }
-        };
-        Timer timer = new Timer("Timer");
-        long delay = 0L;
-        long period = 1000L;
-        timer.scheduleAtFixedRate(repeatedTask, delay, period);
     }
 
     public static List<Employee> fetchData() throws SQLException {

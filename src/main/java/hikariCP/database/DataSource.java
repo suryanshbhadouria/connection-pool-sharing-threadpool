@@ -38,20 +38,4 @@ public class DataSource {
     public static Connection getConnection() throws SQLException {
         return ds.getConnection();
     }
-
-    public static void emitMetrics() {
-        try {
-            MBeanServer mBeanServer = ManagementFactory.getPlatformMBeanServer();
-            ObjectName poolName = new ObjectName("com.zaxxer.hikari:type=Pool (HikariPool-1)");
-            HikariPoolMXBean poolProxy = JMX.newMXBeanProxy(mBeanServer, poolName, HikariPoolMXBean.class);
-            logger.info("Pool stats: activeConnections :{} ;idleConnections :{} ;threadsAwaitingConnections :{},totalConnections :{}",
-                    poolProxy.getActiveConnections(),
-                    poolProxy.getIdleConnections(),
-                    poolProxy.getThreadsAwaitingConnection(),
-                    poolProxy.getTotalConnections());
-
-        } catch (Exception e) {
-            logger.error("Error when emitting metrics:{}", e.getMessage());
-        }
-    }
 }
